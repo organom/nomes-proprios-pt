@@ -6,10 +6,9 @@ import {TypeColumn} from '@inovua/reactdatagrid-community/types/TypeColumn';
 import {TypeFilterValue} from '@inovua/reactdatagrid-community/types/TypeFilterValue';
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import {imported_names, info_page} from './data';
-import {Accordion, Stack, Form, InputGroup, Button} from 'react-bootstrap';
+import {Accordion, Stack, Form, InputGroup, Button, Nav} from 'react-bootstrap';
 
 function App() {
-	//const [loading, setLoading] = useState<boolean>(false);
 	const [names, setNames] = React.useState(imported_names.names);
 	const [minLength, setMinLength] = React.useState(1);
 	const [maxLength, setMaxLength] = React.useState(30);
@@ -47,6 +46,8 @@ function App() {
 	}
 	function resetFilter() {
 		setNames(imported_names.names);
+		setMinLength(1);
+		setMaxLength(30);
 		setStartsWith('');
 		setCantStartWith('');
 		setEndsWith('');
@@ -55,66 +56,65 @@ function App() {
 	}
 
 	return (
-		<div className="App">
+		<div className="App m-4">
 			<header className="App-header">
-				<h1>Lista dos nomes próprios em Portugal</h1>
+				<Stack direction="horizontal" className="justify-content-between" gap={3}>
+					<h1>Lista dos nomes próprios em Portugal</h1>
+					<a className="link-dark" href='https://github.com/organom/nomes-proprios-pt'><h2 className="bi bi-github"/></a>
+				</Stack>
 				<p>Esta aplicação baseia-se na lista de nomes próprios de cidadãos portugueses dos últimos três anos publicada pelo <a href={info_page} rel="noreferrer" target="_blank">Instituto dos Registos e do Notariado</a> (versão <a href={imported_names.download_url} target="_blank" rel="noreferrer">{imported_names.version}</a>)</p>
 				<p>Tem como principal objectivo fornecer uma interface simples de pesquisa e filtragem avançada da lista de nomes.</p>
-
-				<Stack direction="vertical" gap={3} className="m-4">
-					<Accordion defaultActiveKey="0">
-						<Accordion.Item eventKey="0">
-							<Accordion.Header>Filtros avançados</Accordion.Header>
-							<Accordion.Body>
-								<Stack direction="vertical" gap={3}>
+				<Accordion defaultActiveKey="0" className="mb-3">
+					<Accordion.Item eventKey="0">
+						<Accordion.Header>Filtros avançados</Accordion.Header>
+						<Accordion.Body>
+							<Stack direction="vertical" gap={3}>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>Tamanho: </InputGroup.Text>
+									<Form.Control type="number" value={minLength} onChange={e => setMinLength(Number(e.target.value))} />
+									<Form.Control type="number" value={maxLength} onChange={e => setMaxLength(Number(e.target.value))} />
+								</InputGroup>
+								<Stack direction="horizontal" gap={3}>
 									<InputGroup className="mb-3">
-										<InputGroup.Text>Tamanho: </InputGroup.Text>
-										<Form.Control type="number" value={minLength} onChange={e => setMinLength(Number(e.target.value))} />
-										<Form.Control type="number" value={maxLength} onChange={e => setMaxLength(Number(e.target.value))} />
+										<InputGroup.Text>Tem de começar por: </InputGroup.Text>
+										<Form.Control value={startsWith} onChange={e => setStartsWith(e.target.value)} />
 									</InputGroup>
-									<Stack direction="horizontal" gap={3}>
-										<InputGroup className="mb-3">
-											<InputGroup.Text>Tem de começar com: </InputGroup.Text>
-											<Form.Control value={startsWith} onChange={e => setStartsWith(e.target.value)} />
-										</InputGroup>
-										<InputGroup className="mb-3">
-											<InputGroup.Text>Não pode começar com: </InputGroup.Text>
-											<Form.Control value={cantStartWith} onChange={e => setCantStartWith(e.target.value)} />
-										</InputGroup>
-									</Stack>
-									<Stack direction="horizontal" gap={3}>
-										<InputGroup className="mb-3">
-											<InputGroup.Text>Tem de acabar com: </InputGroup.Text>
-											<Form.Control value={endsWith} onChange={e => setEndsWith(e.target.value)} />
-										</InputGroup>
-										<InputGroup className="mb-3">
-											<InputGroup.Text>Não pode acabar com: </InputGroup.Text>
-											<Form.Control value={cantEndWith} onChange={e => setCantEndWith(e.target.value)} />
-										</InputGroup>
-									</Stack>
 									<InputGroup className="mb-3">
-										<InputGroup.Text>Não deve incluir (se mais que um separar com "<b>,</b>"):  </InputGroup.Text>
-										<Form.Control aria-label="doesntContain" value={doesntContain} onChange={e => setDoesntContain(e.target.value.split(',').map(x => x.trim()))} />
+										<InputGroup.Text>Não pode começar por: </InputGroup.Text>
+										<Form.Control value={cantStartWith} onChange={e => setCantStartWith(e.target.value)} />
 									</InputGroup>
-									<Stack direction="horizontal" gap={3} className="justify-content-end">
-										<Button className="btn-dark" onClick={setFilter}>Set Filter</Button>
-										<Button className="btn-dark" onClick={resetFilter}>Reset Filter</Button>
-									</Stack>
 								</Stack>
-							</Accordion.Body>
-						</Accordion.Item>
-					</Accordion>
-					<ReactDataGrid
-						idProperty="id"
-						columns={columns}
-						dataSource={names}
-						style={gridStyle}
-						allowUnsort={false}
-						editable={true}
-						//		loading={loading}
-						defaultFilterValue={filterValue}
-					/>
-				</Stack>
+								<Stack direction="horizontal" gap={3}>
+									<InputGroup className="mb-3">
+										<InputGroup.Text>Tem de acabar em: </InputGroup.Text>
+										<Form.Control value={endsWith} onChange={e => setEndsWith(e.target.value)} />
+									</InputGroup>
+									<InputGroup className="mb-3">
+										<InputGroup.Text>Não pode acabar em: </InputGroup.Text>
+										<Form.Control value={cantEndWith} onChange={e => setCantEndWith(e.target.value)} />
+									</InputGroup>
+								</Stack>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>Não deve incluir (se mais que um separar com "<b>,</b>"):  </InputGroup.Text>
+									<Form.Control aria-label="doesntContain" value={doesntContain} onChange={e => setDoesntContain(e.target.value.split(',').map(x => x.trim()))} />
+								</InputGroup>
+								<Stack direction="horizontal" gap={3} className="justify-content-end">
+									<Button className="btn-dark" onClick={setFilter}>Aplicar Filtro</Button>
+									<Button className="btn-dark" onClick={resetFilter}>Limpar Filtro</Button>
+								</Stack>
+							</Stack>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+				<ReactDataGrid
+					idProperty="id"
+					columns={columns}
+					dataSource={names}
+					style={gridStyle}
+					allowUnsort={false}
+					editable={true}
+					defaultFilterValue={filterValue}
+				/>
 			</header>
 		</div>
 	);

@@ -1,6 +1,7 @@
 {
   "name": "nomes-proprios-pt",
   "version": "0.1.0",
+  "homepage": "https://organom.github.io/nomes-proprios-pt",
   "private": true,
   "dependencies": {
     "@inovua/reactdatagrid-community": "^5.3.1",
