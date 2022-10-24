@@ -97,7 +97,7 @@ function App() {
 									</InputGroup>
 								</Stack>
 								<InputGroup className="mb-3">
-									<InputGroup.Text>Não deve incluir (se mais que um separar com "<b>,</b>"):  </InputGroup.Text>
+									<InputGroup.Text>Não deve incluir (para vários, separar com "<b>,</b>"):  </InputGroup.Text>
 									<Form.Control aria-label="doesntContain" value={doesntContain} onChange={e => setDoesntContain(e.target.value.split(',').map(x => x.trim()))} />
 								</InputGroup>
 								<Stack direction="horizontal" gap={3} className="justify-content-end">
