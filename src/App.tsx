@@ -6,7 +6,7 @@ import {TypeColumn} from '@inovua/reactdatagrid-community/types/TypeColumn';
 import {TypeFilterValue} from '@inovua/reactdatagrid-community/types/TypeFilterValue';
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import {imported_names, info_page} from './data';
-import {Accordion, Stack, Form, InputGroup, Button, Nav} from 'react-bootstrap';
+import {Accordion, Stack, Form, InputGroup, Button} from 'react-bootstrap';
 
 function App() {
 	const [names, setNames] = React.useState(imported_names.names);
@@ -36,11 +36,11 @@ function App() {
 
 	function setFilter() {
 		let filtered = imported_names.names.filter(x => x.name.length >= minLength && x.name.length <= maxLength);
-		startsWith && (filtered = filtered.filter(x => x.name.startsWith(startsWith)));
-		cantStartWith && (filtered = filtered.filter(x => !x.name.startsWith(cantStartWith)));
-		endsWith && (filtered = filtered.filter(x => x.name.endsWith(endsWith)));
-		cantEndWith && (filtered = filtered.filter(x => !x.name.endsWith(cantEndWith)));
-		doesntContain && doesntContain.length > 0 && (filtered = filtered.filter(x => !doesntContain.some(y => x.name.includes(y))));
+		startsWith && (filtered = filtered.filter(x => x.name.toLowerCase().startsWith(startsWith.toLowerCase())));
+		cantStartWith && (filtered = filtered.filter(x => !x.name.toLowerCase().startsWith(cantStartWith.toLowerCase())));
+		endsWith && (filtered = filtered.filter(x => x.name.toLowerCase().endsWith(endsWith.toLowerCase())));
+		cantEndWith && (filtered = filtered.filter(x => !x.name.toLowerCase().endsWith(cantEndWith.toLowerCase())));
+		doesntContain && doesntContain.length > 0 && (filtered = filtered.filter(x => !doesntContain.some(y => x.name.toLowerCase().includes(y.toLowerCase()))));
 
 		setNames(filtered);
 	}
@@ -60,7 +60,9 @@ function App() {
 			<header className="App-header">
 				<Stack direction="horizontal" className="justify-content-between" gap={3}>
 					<h1>Lista dos nomes próprios em Portugal</h1>
-					<a className="link-dark" href='https://github.com/organom/nomes-proprios-pt'><h2 className="bi bi-github"/></a>
+					<a className="link-dark text-decoration-none" href='https://github.com/organom/nomes-proprios-pt'>
+						<h2><i className="bi bi-github" /></h2>
+					</a>
 				</Stack>
 				<p>Esta aplicação baseia-se na lista de nomes próprios de cidadãos portugueses dos últimos três anos publicada pelo <a href={info_page} rel="noreferrer" target="_blank">Instituto dos Registos e do Notariado</a> (versão <a href={imported_names.download_url} target="_blank" rel="noreferrer">{imported_names.version}</a>)</p>
 				<p>Tem como principal objectivo fornecer uma interface simples de pesquisa e filtragem avançada da lista de nomes.</p>
