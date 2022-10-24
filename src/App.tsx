@@ -100,9 +100,13 @@ function App() {
 									<InputGroup.Text>Não deve incluir (para vários, separar com "<b>,</b>"):  </InputGroup.Text>
 									<Form.Control aria-label="doesntContain" value={doesntContain} onChange={e => setDoesntContain(e.target.value.split(',').map(x => x.trim()))} />
 								</InputGroup>
-								<Stack direction="horizontal" gap={3} className="justify-content-end">
-									<Button className="btn-dark" onClick={setFilter}>Aplicar Filtro</Button>
-									<Button className="btn-dark" onClick={resetFilter}>Limpar Filtro</Button>
+
+								<Stack direction="horizontal" className="justify-content-between" gap={3}>
+									<div>Total de nomes: {names.length}</div>
+									<Stack direction="horizontal" gap={3} className="justify-content-end">
+										<Button className="btn-dark" onClick={setFilter}>Aplicar Filtro</Button>
+										<Button className="btn-dark" onClick={resetFilter}>Limpar Filtro</Button>
+									</Stack>
 								</Stack>
 							</Stack>
 						</Accordion.Body>
