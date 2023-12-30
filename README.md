@@ -1,8 +1,10 @@
 # Nomes próprios PT
 [![CodeQL](https://github.com/organom/nomes-proprios-pt/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/organom/nomes-proprios-pt/actions/workflows/codeql-analysis.yml) [![GHPages](https://github.com/organom/nomes-proprios-pt/actions/workflows/ghpages.yml/badge.svg)](https://github.com/organom/nomes-proprios-pt/actions/workflows/ghpages.yml)
 
+
 Enables advanced filtering on the Portuguese personal name list published by Instituto dos Registos e do Notariado at https://irn.justica.gov.pt/Servicos/Cidadao/Nascimento/Composicao-do-nome
 
+Check live demo at: https://organom.github.io/nomes-proprios-pt
 
 # Development
 
